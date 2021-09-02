@@ -1,6 +1,6 @@
 // import React from 'react';
 import { SmileOutlined, CrownOutlined, TabletOutlined } from '@ant-design/icons';
-export default {
+let meuns = {
   route: {
     path: '/',
     routes: [
@@ -88,3 +88,5 @@ export default {
     pathname: '/',
   },
 };
+
+export default meuns

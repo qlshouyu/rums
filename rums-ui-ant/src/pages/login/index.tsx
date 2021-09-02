@@ -47,7 +47,7 @@ class Login extends React.Component<any,any> {
                 <Input size="large" placeholder="请输入密码" prefix={<LockOutlined />} />
               </Form.Item>
               <Form.Item name="pwd" rules={[{ required: true, message: '请输入密码!' }]}>
-                  <img src={this.state.codeUrl} onClick={this.getCode} />
+                  <img alt="验证码" src={this.state.codeUrl} onClick={this.getCode} />
               </Form.Item>
               <Form.Item name="remember" valuePropName="checked" >
                 <Checkbox>记住密码</Checkbox>

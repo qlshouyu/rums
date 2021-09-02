@@ -1,9 +1,9 @@
 import React, { useState } from 'react';
 import { Button, Descriptions, Result, Avatar, Space, Statistic } from 'antd';
-import { LikeOutlined, UserOutlined,GithubOutlined } from '@ant-design/icons';
+import { LikeOutlined, UserOutlined } from '@ant-design/icons';
 
 import type { ProSettings } from '@ant-design/pro-layout';
-import ProLayout, { PageContainer, SettingDrawer,DefaultFooter } from '@ant-design/pro-layout';
+import ProLayout, { PageContainer, SettingDrawer } from '@ant-design/pro-layout';
 import defaultProps from './_defaultProps';
 import '@ant-design/pro-layout/dist/layout.css';
 import './home.css'
@@ -12,7 +12,7 @@ const content = (
   <Descriptions size="small" column={2}>
     <Descriptions.Item label="创建人">张三</Descriptions.Item>
     <Descriptions.Item label="联系方式">
-      <a>421421</a>
+    421421
     </Descriptions.Item>
     <Descriptions.Item label="创建时间">2017-01-10</Descriptions.Item>
     <Descriptions.Item label="更新时间">2017-10-10</Descriptions.Item>
@@ -20,7 +20,7 @@ const content = (
   </Descriptions>
 );
 
-export default () => {
+const Home= () => {
   const [settings, setSetting] = useState<Partial<ProSettings> | undefined>({ fixSiderbar: true });
   const [pathname, setPathname] = useState('/welcome');
   return (
@@ -71,8 +71,7 @@ export default () => {
         }}
         onMenuHeaderClick={(e) => console.log(e)}
         menuItemRender={(item, dom) => (
-          <a
-            onClick={() => {
+          <a onClick={() => {
               setPathname(item.path || '/welcome');
             }}
           >
@@ -140,3 +139,4 @@ export default () => {
     </div>
   );
 };
+export default Home;
