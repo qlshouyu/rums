@@ -18,7 +18,7 @@ package com.qlshouyu.rums.modules.security.service.dto;
 import com.alibaba.fastjson.annotation.JSONField;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
-import com.qlshouyu.rums.modules.system.service.dto.UserDto;
+import com.qlshouyu.rums.modules.admin.service.dto.UserDto;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import java.util.List;

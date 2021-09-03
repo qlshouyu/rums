@@ -17,13 +17,13 @@ package com.qlshouyu.rums.modules.security.service;
 
 import com.qlshouyu.rums.modules.security.config.bean.LoginProperties;
 import com.qlshouyu.rums.modules.security.service.dto.JwtUserDto;
-import com.qlshouyu.rums.modules.system.service.UserService;
+import com.qlshouyu.rums.modules.admin.service.UserService;
 import lombok.RequiredArgsConstructor;
 import com.qlshouyu.rums.exception.BadRequestException;
 import com.qlshouyu.rums.exception.EntityNotFoundException;
-import com.qlshouyu.rums.modules.system.service.DataService;
-import com.qlshouyu.rums.modules.system.service.RoleService;
-import com.qlshouyu.rums.modules.system.service.dto.UserDto;
+import com.qlshouyu.rums.modules.admin.service.DataService;
+import com.qlshouyu.rums.modules.admin.service.RoleService;
+import com.qlshouyu.rums.modules.admin.service.dto.UserDto;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;

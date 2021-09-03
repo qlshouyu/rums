@@ -27,6 +27,7 @@ import com.qlshouyu.rums.modules.security.service.dto.AuthUserDto;
 import com.qlshouyu.rums.modules.security.service.dto.JwtUserDto;
 import com.qlshouyu.rums.utils.RedisUtils;
 import com.qlshouyu.rums.utils.RsaUtils;
+import com.qlshouyu.rums.web.ResponseResult;
 import com.wf.captcha.base.Captcha;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -133,7 +134,7 @@ public class AuthorizationController {
             put("img", captcha.toBase64());
             put("uuid", uuid);
         }};
-        return ResponseEntity.ok(imgResult);
+        return ResponseEntity.ok(new ResponseResult(imgResult));
     }
 
     @ApiOperation("退出登录")
