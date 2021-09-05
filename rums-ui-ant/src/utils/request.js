@@ -1,13 +1,19 @@
 import axios from "axios"
+import config from "../config"
+import { getToken } from './auth'
+import store from '../store/store'
+import { loading,unloading} from '../slices/requestSlices'
 // 创建axios实例
-const service = axios.create({
-  baseURL: process.env.NODE_ENV === 'production' ? process.env.VUE_APP_BASE_API : '/', // api 的 base_url
-  timeout: Config.timeout // 请求超时时间
+console.log('baseUrl',process.env.REACT_APP_BASE_API)
+const axiosRequet = axios.create({
+  baseURL: process.env.REACT_APP_BASE_API, // api 的 base_url
+  timeout: config.timeout // 请求超时时间
 })
 
 // request拦截器
-service.interceptors.request.use(
+axiosRequet.interceptors.request.use(
   config => {
+    store.dispatch(loading)
     if (getToken()) {
       config.headers['Authorization'] = getToken() // 让每个请求携带自定义token 请根据实际情况自行修改
     }
@@ -16,22 +22,35 @@ service.interceptors.request.use(
   },
   error => {
     // Do something with request error
-    console.log(error) // for debug
+    console.log('Request error',error) // for debug
+    Promise.reject(error)
+  }
+)
+// request拦截器
+axiosRequet.interceptors.response.use(
+  response => {
+    console.log('interceptors->response')
+    store.dispatch(unloading)
+    return response
+  },
+  error => {
+    // Do something with request error
+    console.log("Response error",error) // for debug
     Promise.reject(error)
   }
 )
 const request={
   get: function(url,data) {
     return new Promise((resolve, reject) => {
-      axios({
+      axiosRequet({
         method: 'get',
         url: url,
         data: data?data:{}
       }).then(function(response){
         console.log(response);
-        if(200==response.status){
+        if(200===response.status){
           if(200===response.data.code) {
-            resolve(resolve.data.data)
+            resolve(response.data.data)
           }else {
             reject(response)
           }
@@ -47,15 +66,16 @@ const request={
   },
   post: function(url,data) {
     return new Promise((resolve, reject) => {
-      axios({
+      console.log('data:',data)
+      axiosRequet({
         method: 'post',
         url: url,
         data: data?data:{}
       }).then(function(response){
-        console.log(response);
-        if(200==response.status){
+        console.log('post result:',response);
+        if(200===response.status){
           if(200===response.data.code) {
-            resolve(resolve.data.data)
+            resolve(response.data.data)
           }else {
             reject(response)
           }
@@ -71,13 +91,13 @@ const request={
   },
   put: function(url,data) {
     return new Promise((resolve, reject) => {
-      axios({
+      axiosRequet({
         method: 'put',
         url: url,
         data: data?data:{}
       }).then(function(response){
         console.log(response);
-        if(200==response.status){
+        if(200===response.status){
           if(200===response.data.code) {
             resolve(resolve.data.data)
           }else {
@@ -95,13 +115,13 @@ const request={
   },
   delete: function(url,data) {
     return new Promise((resolve, reject) => {
-      axios({
+      axiosRequet({
         method: 'delete',
         url: url,
         data: data?data:{}
       }).then(function(response){
         console.log(response);
-        if(200==response.status){
+        if(200===response.status){
           if(200===response.data.code) {
             resolve(resolve.data.data)
           }else {

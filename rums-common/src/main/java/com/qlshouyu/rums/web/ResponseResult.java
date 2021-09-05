@@ -23,5 +23,28 @@ public class ResponseResult {
         this(REST_RESULT.ERROR, REST_RESULT.ERROR.getValue(), "未知的服务器错误");
     }
 
+    public int getCode() {
+        return code;
+    }
+
+    public void setCode(int code) {
+        this.code = code;
+    }
+
+    public Object getData() {
+        return data;
+    }
+
+    public void setData(Object data) {
+        this.data = data;
+    }
+
+    public String getTip() {
+        return tip;
+    }
+
+    public void setTip(String tip) {
+        this.tip = tip;
+    }
 }
 

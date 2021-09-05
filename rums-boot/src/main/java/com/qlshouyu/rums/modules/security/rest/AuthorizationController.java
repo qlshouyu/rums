@@ -46,6 +46,7 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
+
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import java.util.HashMap;
@@ -75,11 +76,11 @@ public class AuthorizationController {
     @AnonymousPostMapping(value = "/login")
     public ResponseEntity<Object> login(@Validated @RequestBody AuthUserDto authUser, HttpServletRequest request) throws Exception {
         // 密码解密
-        String password = RsaUtils.decryptByPrivateKey(RsaProperties.privateKey, authUser.getPassword());
+        String password = RsaUtils.decryptByPrivateKey(RsaProperties.privateKey, authUser.getPwd());
         // 查询验证码
-        String code = (String) redisUtils.get(authUser.getUuid());
+        String code = (String) redisUtils.get(authUser.getCodeId());
         // 清除验证码
-        redisUtils.del(authUser.getUuid());
+        redisUtils.del(authUser.getCodeId());
         if (StringUtils.isBlank(code)) {
             throw new BadRequestException("验证码不存在或已过期");
         }
@@ -107,7 +108,7 @@ public class AuthorizationController {
             //踢掉之前已经登录的token
             onlineUserService.checkLoginOnUser(authUser.getUsername(), token);
         }
-        return ResponseEntity.ok(authInfo);
+        return ResponseEntity.ok(new ResponseResult(authInfo));
     }
 
     @ApiOperation("获取用户信息")
@@ -121,18 +122,18 @@ public class AuthorizationController {
     public ResponseEntity<Object> getCode() {
         // 获取运算的结果
         Captcha captcha = loginProperties.getCaptcha();
-        String uuid = properties.getCodeKey() + IdUtil.simpleUUID();
+        String imgId = properties.getCodeKey() + IdUtil.simpleUUID();
         //当验证码类型为 arithmetic时且长度 >= 2 时，captcha.text()的结果有几率为浮点型
         String captchaValue = captcha.text();
         if (captcha.getCharType() - 1 == LoginCodeEnum.arithmetic.ordinal() && captchaValue.contains(".")) {
             captchaValue = captchaValue.split("\\.")[0];
         }
         // 保存
-        redisUtils.set(uuid, captchaValue, loginProperties.getLoginCode().getExpiration(), TimeUnit.MINUTES);
+        redisUtils.set(imgId, captchaValue, loginProperties.getLoginCode().getExpiration(), TimeUnit.MINUTES);
         // 验证码信息
         Map<String, Object> imgResult = new HashMap<String, Object>(2) {{
-            put("img", captcha.toBase64());
-            put("uuid", uuid);
+            put("codeImg", captcha.toBase64());
+            put("id", imgId);
         }};
         return ResponseEntity.ok(new ResponseResult(imgResult));
     }

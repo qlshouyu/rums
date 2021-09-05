@@ -1,6 +1,8 @@
 import Login from "./pages/login"
-const routes = {
-  path: '/',
-  component: Login
-}
+import Home from './components/home';
+const routes = [
+  {path: '/', name:"首页",  component: Home, auth: true},
+  {path: '/login',name:"登录", component: Login}
+
+]
 export default routes;

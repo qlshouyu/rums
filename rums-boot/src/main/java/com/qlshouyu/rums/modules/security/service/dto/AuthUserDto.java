@@ -31,9 +31,9 @@ public class AuthUserDto {
     private String username;
 
     @NotBlank
-    private String password;
+    private String pwd;
 
     private String code;
 
-    private String uuid = "";
+    private String codeId = "";
 }
