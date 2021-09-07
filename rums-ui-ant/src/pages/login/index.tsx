@@ -4,7 +4,8 @@ import "./index.css"
 import { UserOutlined,LockOutlined } from '@ant-design/icons';
 import {getCodeImg,login} from '../../api/login'
 import { encrypt } from '../../utils/encrypt';
-import store from '../../store/store'
+// import store from '../../store/store'
+import { connect } from 'react-redux'
 import {loginAction} from '../../slices/currentUserSlice'
 import { setToken } from '../../utils/auth';
 
@@ -34,6 +35,7 @@ class Login extends React.Component<any,any> {
     console.log("Remember pwd")
   }
   componentDidMount() {
+    console.log('login componentDidMount:', this.props);
     this.getCode()
   }
   onSubmit = (values:any) => {
@@ -42,9 +44,9 @@ class Login extends React.Component<any,any> {
     values.pwd=encrypt(values.pwd)
     login(values).then(result=>{
       console.log('Login succefully:',result)
-      store.dispatch(loginAction(result.user))
+      // store.dispatch(loginAction(result.user))
+      this.props.login(result.user)
       setToken(result.token,true)
-      window.location.href="/"
     })
     
 
@@ -96,4 +98,15 @@ class Login extends React.Component<any,any> {
     </div>
   }
 }
-export default Login;
+
+const mapStateToProps =(state:any)=> {
+  console.log('mapStateTopProps:',state)
+  return {isLoading:false}
+}
+const mapDispatchToProps =(dispatch:any)=> {
+  return {
+    // dispatching plain actions
+    login: (data:any) => dispatch(loginAction(data))
+  }
+}
+export default connect(mapStateToProps,mapDispatchToProps)(Login);

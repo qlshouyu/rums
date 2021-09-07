@@ -1,12 +1,9 @@
 import React from 'react';
 import { Spin } from 'antd';
-import store from './store/store';
-// import { Button } from 'antd';
-// import logo from './logo.svg';
 import {BrowserRouter as Router,Route,Switch,Redirect} from 'react-router-dom';
 import {getToken} from './utils/auth'
 import Routers from './routes'
-// import { connect } from 'react-redux'
+import { connect } from 'react-redux'
 
 
 import './App.css';
@@ -20,7 +17,7 @@ class App extends React.Component<any,any> {
   }
   
   itemRender=(props:any,item:any)=>{
-    if(this.token) {
+    if(this.props.currentUser) {
       console.log("have token")
       if(item.path==='/login'){
         return <Redirect to={{pathname: '/',state: { from: props.location }}} />
@@ -40,17 +37,14 @@ class App extends React.Component<any,any> {
   }
   componentDidMount() {
     console.log('app componentDidMount')
-    store.subscribe(()=>{
-      console.log('chnage:',store.getState().request.isLoading)
-      this.setState({isLoading:store.getState().request.isLoading})
-    })
   }
   render(){
+    console.log('pppp==',this.props)
     return (
       <div className="App">
         {
           
-          this.state.isLoading?(<div style={{width:"100%",height:"100%",position:'fixed', display:'table',zIndex:1000, background:'#00000055',textAlign:'center'}}>
+          this.props.isLoading?(<div style={{width:"100%",height:"100%",position:'fixed', display:'table',zIndex:1000, background:'#00000055',textAlign:'center'}}>
           <div style={{display:'table-cell', verticalAlign:'middle',marginLeft:'auto', marginRight:'auto'}}>
             <Spin tip="Loading...">
             </Spin>
@@ -72,4 +66,9 @@ class App extends React.Component<any,any> {
 
 }
 
-export default App;
+const mapStateTopProps =(state:any)=> {
+  console.log('mapStateTopProps:',state)
+  return {isLoading:state.request.isLoading,currentUser:state.currentUser.currentUser}
+}
+
+export default connect(mapStateTopProps)(App);

@@ -13,7 +13,9 @@ const axiosRequet = axios.create({
 // request拦截器
 axiosRequet.interceptors.request.use(
   config => {
-    store.dispatch(loading)
+    console.log('interceptors->request:',store)
+    
+    store.dispatch(loading())
     if (getToken()) {
       config.headers['Authorization'] = getToken() // 让每个请求携带自定义token 请根据实际情况自行修改
     }
@@ -30,7 +32,7 @@ axiosRequet.interceptors.request.use(
 axiosRequet.interceptors.response.use(
   response => {
     console.log('interceptors->response')
-    store.dispatch(unloading)
+    store.dispatch(unloading())
     return response
   },
   error => {
