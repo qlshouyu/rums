@@ -5,5 +5,10 @@ export function getCodeImg() {
 
 export function login(user:any) {
 
-  return request.post('auth/login',user)
+  return request.post('/auth/login',user)
+}
+
+// 获取用户菜单
+export function getUserMenus() {
+  return request.get('/api/menus/build')
 }
