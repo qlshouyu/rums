@@ -4,6 +4,7 @@ import {BrowserRouter as Router,Route,Switch,Redirect} from 'react-router-dom';
 import {getToken} from './utils/auth'
 import Routers from './routes'
 import { connect } from 'react-redux'
+import {getUserMenus} from './api/login'
 
 
 import './App.css';
@@ -13,9 +14,14 @@ class App extends React.Component<any,any> {
   constructor(props:any) {
     super(props);
     this.state = {codeUrl: '',codeId:''};
-    this.token = getToken()
+    
   }
-  
+  getMenus=()=>{
+    getUserMenus().then(function(data){
+      console.log('menus:',data)
+    })
+    
+  }
   itemRender=(props:any,item:any)=>{
     if(this.props.currentUser) {
       console.log("have token")
@@ -36,7 +42,12 @@ class App extends React.Component<any,any> {
     }
   }
   componentDidMount() {
-    console.log('app componentDidMount')
+    this.token = getToken()
+    // 说明已经登录获取菜单
+    // if(this.token) {
+    //   console.log('Had logined')
+    //   this.getMenus()
+    // }
   }
   render(){
     console.log('pppp==',this.props)
@@ -67,7 +78,6 @@ class App extends React.Component<any,any> {
 }
 
 const mapStateTopProps =(state:any)=> {
-  console.log('mapStateTopProps:',state)
   return {isLoading:state.request.isLoading,currentUser:state.currentUser.currentUser}
 }
 

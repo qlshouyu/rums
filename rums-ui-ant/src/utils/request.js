@@ -14,7 +14,6 @@ const axiosRequet = axios.create({
 axiosRequet.interceptors.request.use(
   config => {
     console.log('interceptors->request:',store)
-    
     store.dispatch(loading())
     if (getToken()) {
       config.headers['Authorization'] = getToken() // 让每个请求携带自定义token 请根据实际情况自行修改

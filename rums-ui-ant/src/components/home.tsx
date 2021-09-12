@@ -1,16 +1,27 @@
 import React, { useState } from 'react';
+<<<<<<< HEAD
 import { Avatar} from 'antd';
 import { UserOutlined } from '@ant-design/icons';
 import {Link,Route,Switch, useRouteMatch } from 'react-router-dom';
+=======
+import { Avatar } from 'antd';
+import { UserOutlined } from '@ant-design/icons';
+import {Route,Switch} from 'react-router-dom';
+>>>>>>> 61448c31e0eff6c6b60591461563bd0d77ec59a9
 import type { ProSettings } from '@ant-design/pro-layout';
 import ProLayout, {  SettingDrawer } from '@ant-design/pro-layout';
 import defaultProps from './_defaultProps';
 import '@ant-design/pro-layout/dist/layout.css';
 import './home.css'
+import User from '../pages/User/User'
 
+
+<<<<<<< HEAD
 // import {BrowserRouter as Router,Route,Switch,Redirect} from 'react-router-dom';
 
 
+=======
+>>>>>>> 61448c31e0eff6c6b60591461563bd0d77ec59a9
 
 const Home= () => {
   const [settings, setSetting] = useState<Partial<ProSettings> | undefined>({ fixSiderbar: true });
@@ -73,6 +84,7 @@ const Home= () => {
         )}
         {...settings}
       >
+<<<<<<< HEAD
           <Switch>
               <Route exact path={`${path}/test`} component={() => <h3>嵌套路由</h3>}/>
           </Switch>
@@ -93,6 +105,13 @@ const Home= () => {
           ]}
         >
         </PageContainer> */}
+=======
+        <PageContainer>
+            <Switch>
+              <Route key='/user' path='/user' component={User}/>
+            </Switch>
+        </PageContainer>
+>>>>>>> 61448c31e0eff6c6b60591461563bd0d77ec59a9
       </ProLayout>
       <SettingDrawer
         pathname={pathname}
