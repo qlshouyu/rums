@@ -1,28 +1,21 @@
 import React, { useState } from 'react';
-import { Button, Descriptions, Result, Avatar, Space, Statistic } from 'antd';
-import { LikeOutlined, UserOutlined } from '@ant-design/icons';
-
+import { Avatar} from 'antd';
+import { UserOutlined } from '@ant-design/icons';
+import {Link,Route,Switch, useRouteMatch } from 'react-router-dom';
 import type { ProSettings } from '@ant-design/pro-layout';
-import ProLayout, { PageContainer, SettingDrawer } from '@ant-design/pro-layout';
+import ProLayout, {  SettingDrawer } from '@ant-design/pro-layout';
 import defaultProps from './_defaultProps';
 import '@ant-design/pro-layout/dist/layout.css';
 import './home.css'
 
-const content = (
-  <Descriptions size="small" column={2}>
-    <Descriptions.Item label="创建人">张三</Descriptions.Item>
-    <Descriptions.Item label="联系方式">
-    421421
-    </Descriptions.Item>
-    <Descriptions.Item label="创建时间">2017-01-10</Descriptions.Item>
-    <Descriptions.Item label="更新时间">2017-10-10</Descriptions.Item>
-    <Descriptions.Item label="备注">中国浙江省杭州市西湖区古翠路</Descriptions.Item>
-  </Descriptions>
-);
+// import {BrowserRouter as Router,Route,Switch,Redirect} from 'react-router-dom';
+
+
 
 const Home= () => {
   const [settings, setSetting] = useState<Partial<ProSettings> | undefined>({ fixSiderbar: true });
-  const [pathname, setPathname] = useState('/welcome');
+  const [pathname] = useState('/welcome');
+  const { path} = useRouteMatch()
   return (
     <div
       id="test-pro-layout"
@@ -71,12 +64,7 @@ const Home= () => {
         }}
         onMenuHeaderClick={(e) => console.log(e)}
         menuItemRender={(item, dom) => (
-          <a onClick={() => {
-              setPathname(item.path || '/welcome');
-            }}
-          >
-            {dom}
-          </a>
+          <Link to={item.path as string}>{dom}</Link>
         )}
         rightContentRender={() => (
           <div>
@@ -85,18 +73,11 @@ const Home= () => {
         )}
         {...settings}
       >
-        <PageContainer
+          <Switch>
+              <Route exact path={`${path}/test`} component={() => <h3>嵌套路由</h3>}/>
+          </Switch>
+        {/* <PageContainer
           content={content}
-          tabList={[
-            {
-              tab: '基本信息',
-              key: 'base',
-            },
-            {
-              tab: '详细信息',
-              key: 'info',
-            },
-          ]}
           extraContent={
             <Space size={24}>
               <Statistic title="Feedback" value={1128} prefix={<LikeOutlined />} />
@@ -111,23 +92,7 @@ const Home= () => {
             </Button>,
           ]}
         >
-          <div
-            style={{
-              height: '120vh',
-            }}
-          >
-            <Result
-              status="404"
-              style={{
-                height: '100%',
-                background: '#fff',
-              }}
-              title="Hello World"
-              subTitle="Sorry, you are not authorized to access this page."
-              extra={<Button type="primary">Back Home</Button>}
-            />
-          </div>
-        </PageContainer>
+        </PageContainer> */}
       </ProLayout>
       <SettingDrawer
         pathname={pathname}

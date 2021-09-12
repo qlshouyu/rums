@@ -37,7 +37,7 @@ axiosRequet.interceptors.response.use(
   },
   error => {
     // Do something with request error
-    console.log("Response error",error) // for debug
+    store.dispatch(unloading())
     Promise.reject(error)
   }
 )
@@ -49,8 +49,9 @@ const request={
         url: url,
         data: data?data:{}
       }).then(function(response){
-        console.log(response);
-        if(200===response.status){
+        
+        if(response&&200===response.status){
+          console.log(response);
           if(200===response.data.code) {
             resolve(response.data.data)
           }else {

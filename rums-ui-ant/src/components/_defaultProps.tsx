@@ -5,10 +5,10 @@ let meuns = {
     path: '/',
     routes: [
       {
-        path: '/welcome',
+        path: '/home/test',
         name: '欢迎',
         icon: <SmileOutlined />,
-        component: './Welcome',
+        component: './Test',
       },
       {
         path: '/admin',
@@ -21,7 +21,7 @@ let meuns = {
             path: '/admin/sub-page1',
             name: '一级页面',
             icon: <CrownOutlined />,
-            component: './Welcome',
+            component: './Test',
           },
           {
             path: '/admin/sub-page2',
