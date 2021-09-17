@@ -1,46 +1,30 @@
 import React, { useState } from 'react';
-<<<<<<< HEAD
-import { Avatar} from 'antd';
+import { Avatar,Button} from 'antd';
 import { UserOutlined } from '@ant-design/icons';
-import {Link,Route,Switch, useRouteMatch } from 'react-router-dom';
-=======
-import { Avatar } from 'antd';
-import { UserOutlined } from '@ant-design/icons';
-import {Route,Switch} from 'react-router-dom';
->>>>>>> 61448c31e0eff6c6b60591461563bd0d77ec59a9
-import type { ProSettings } from '@ant-design/pro-layout';
-import ProLayout, {  SettingDrawer } from '@ant-design/pro-layout';
+import {Link } from 'react-router-dom';
+import ProLayout, {  ProSettings,SettingDrawer,PageContainer } from '@ant-design/pro-layout';
 import defaultProps from './_defaultProps';
+import {Route,Switch} from 'react-router-dom';
 import '@ant-design/pro-layout/dist/layout.css';
 import './home.css'
-import User from '../pages/User/User'
+import Test from './Test';
+// import User from '../pages/User/User'
 
-
-<<<<<<< HEAD
-// import {BrowserRouter as Router,Route,Switch,Redirect} from 'react-router-dom';
-
-
-=======
->>>>>>> 61448c31e0eff6c6b60591461563bd0d77ec59a9
-
-const Home= () => {
+const Home= (props:any) => {
   const [settings, setSetting] = useState<Partial<ProSettings> | undefined>({ fixSiderbar: true });
   const [pathname] = useState('/welcome');
-  const { path} = useRouteMatch()
+  // const location:any = useLocation();
+  // let { path, url } = useRouteMatch();
+  console.log('Home',props)
   return (
-    <div
-      id="test-pro-layout"
-      style={{
-        height: '100vh',
-      }}
-    >
+    <div id="test-pro-layout" style={{height: '100vh',}}>
       <ProLayout
         {...defaultProps}
         title='爱家后台管理系统'
         fixedHeader={true}
         logo="https://gw.alipayobjects.com/mdn/rms_b5fcc5/afts/img/A*1NHAQYduQiQAAAAAAAAAAABkARQnAQ"
         location={{
-          pathname,
+          pathname
         }}
         waterMarkProps={{
           content: '爱家',
@@ -84,18 +68,7 @@ const Home= () => {
         )}
         {...settings}
       >
-<<<<<<< HEAD
-          <Switch>
-              <Route exact path={`${path}/test`} component={() => <h3>嵌套路由</h3>}/>
-          </Switch>
-        {/* <PageContainer
-          content={content}
-          extraContent={
-            <Space size={24}>
-              <Statistic title="Feedback" value={1128} prefix={<LikeOutlined />} />
-              <Statistic title="Unmerged" value={93} suffix="/ 100" />
-            </Space>
-          }
+        <PageContainer
           extra={[
             <Button key="3">操作</Button>,
             <Button key="2">操作</Button>,
@@ -104,14 +77,13 @@ const Home= () => {
             </Button>,
           ]}
         >
-        </PageContainer> */}
-=======
-        <PageContainer>
-            <Switch>
-              <Route key='/user' path='/user' component={User}/>
-            </Switch>
+          <Switch>
+            <Route exact path='/test'>
+              <Test></Test>
+            </Route>
+          </Switch>
         </PageContainer>
->>>>>>> 61448c31e0eff6c6b60591461563bd0d77ec59a9
+        
       </ProLayout>
       <SettingDrawer
         pathname={pathname}

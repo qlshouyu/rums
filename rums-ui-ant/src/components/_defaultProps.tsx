@@ -5,7 +5,7 @@ let meuns = {
     path: '/',
     routes: [
       {
-        path: '/home/test',
+        path: '/test',
         name: '欢迎',
         icon: <SmileOutlined />,
         component: './Test',

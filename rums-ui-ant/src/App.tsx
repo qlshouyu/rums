@@ -8,6 +8,9 @@ import {getUserMenus} from './api/login'
 
 
 import './App.css';
+import Login from './pages/login';
+import Home from './components/home';
+// import Login from './pages/login';
 
 class App extends React.Component<any,any> {
   private token:any
@@ -62,13 +65,23 @@ class App extends React.Component<any,any> {
           </div>
           </div>):""
         }
-        <Router>
+        <Router >
           <Switch>
-            {
-              Routers.map((item, index) => {
-                console.log('path',item.path)
-                 return <Route key={index} path={item.path} exact render={props =>this.itemRender(props,item)} />
-            })}
+          {
+            // Routers.map((item, index) => {
+            //   console.log('path',item.path)
+            //   return <Route 
+            //   key={index} 
+            //   path={item.path}
+            //   exact={item.path==='/login'?true:false}
+            //   render={props =>this.itemRender(props,item)} >
+            //   </Route>
+            // })
+          }
+            <Route exact path='/' render={props =>this.itemRender(props,item)} />
+            <Route path='/login'>
+              <Home />
+            </Route>
           </Switch>
         </Router>
       </div>
